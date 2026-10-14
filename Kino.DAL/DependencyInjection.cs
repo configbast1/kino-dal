@@ -1,7 +1,6 @@
 using Kino.DAL.Data;
 using Kino.DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Kino.DAL;
@@ -12,10 +11,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddDataAccessLayer(
         this IServiceCollection services,
-        IConfiguration configuration)
+        string? connectionString)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
-
         services.AddDbContext<MovieDbContext>(options =>
             options.UseSqlServer(connectionString));
 

@@ -7,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // рівень доступу до даних: MovieDbContext + IUnitOfWork (усе налаштовано всередині Kino.DAL)
-builder.Services.AddDataAccessLayer(builder.Configuration);
+builder.Services.AddDataAccessLayer(
+    builder.Configuration.GetConnectionString("DefaultConnection"));
 
 // сервіси рівня представлення
 builder.Services.AddScoped<IPosterStorage, PosterStorage>();

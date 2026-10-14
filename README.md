@@ -33,7 +33,7 @@ Kino.sln
 | `Repositories/Repository.cs` | базова реалізація `IRepository<T>` на EF Core |
 | `UnitOfWork/IUnitOfWork.cs` | репозиторії `Movies`, `Genres`, `Directors` та `SaveChangesAsync()` |
 | `UnitOfWork/UnitOfWork.cs` | тримає один `MovieDbContext` і створює всі репозиторії на ньому |
-| `DependencyInjection.cs` | `AddDataAccessLayer(configuration)` та `EnsureDatabaseCreated()` |
+| `DependencyInjection.cs` | `AddDataAccessLayer(connectionString)` та `EnsureDatabaseCreated()` |
 
 ```csharp
 public interface IUnitOfWork : IDisposable
@@ -62,7 +62,8 @@ public interface IUnitOfWork : IDisposable
 Реєстрація в `Program.cs`:
 
 ```csharp
-builder.Services.AddDataAccessLayer(builder.Configuration);   // MovieDbContext + IUnitOfWork
+builder.Services.AddDataAccessLayer(
+    builder.Configuration.GetConnectionString("DefaultConnection"));   // MovieDbContext + IUnitOfWork
 builder.Services.AddScoped<IPosterStorage, PosterStorage>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 ```
